@@ -161,6 +161,7 @@ classes for use and configuration.
 * `st2::proflle::server` - st2 server components
 * `st2::profile::web` - st2 web components
 * `st2::profile::chatops` - st2 chatops components
+* `st2::profile::metrics` - st2 set up metrics
 
 #### Installing and Configuring Packs
 
@@ -465,6 +466,24 @@ $res = run_task('st2::key_get', $stackstorm_target,
                 username => $username,
                 password => $password)
 ```
+
+#### Metrics
+
+This module provides the ability to set up the metrics endpoints to expose different metrics built into StackStorm as documented here:
+https://docs.stackstorm.com/reference/metrics.html
+
+There is also an addition metric that can be auto created which exposes the basic health for NGINX called a basic status page.
+
+```ruby
+class { 'st2':
+  python_version             => '3.8',
+  metrics_include            => true,
+  nginx_basicstatus_enabled  => true,
+}
+```
+
+Once these metrics are setup and enabled it gives the ability to scrape those metrics with an outside source like telegraf
+or prometheus or any other scraping tool.
 
 ## Limitations
 
